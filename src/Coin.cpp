@@ -94,6 +94,7 @@ THORChain::Entry thorchainDP;
 Tron::Entry tronDP;
 VeChain::Entry vechainDP;
 Waves::Entry wavesDP;
+Westend::Entry westendDP;
 Zcash::Entry zcashDP;
 Zilliqa::Entry zilliqaDP;
 // end_of_coin_dipatcher_declarations_marker_do_not_modify
@@ -171,6 +172,7 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWCoinTypeOptimism: entry = &ethereumDP; break;
         case TWCoinTypeArbitrum: entry = &ethereumDP; break;
         case TWCoinTypeECOChain: entry = &ethereumDP; break;
+        case TWCoinTypeWestend: entry = &westendDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;

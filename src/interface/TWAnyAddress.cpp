@@ -185,6 +185,12 @@ TWData* _Nonnull TWAnyAddressData(struct TWAnyAddress* _Nonnull address) {
         break;
     }
 
+    case TWCoinTypeWestend: {
+        auto addr = Westend::Address(string);
+        data = Data(addr.bytes.begin() + 1, addr.bytes.end());
+        break;
+    }
+
     case TWCoinTypeCardano: {
         auto addr = Cardano::AddressV3(string);
         data = addr.data();

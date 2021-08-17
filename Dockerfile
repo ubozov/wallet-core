@@ -39,7 +39,7 @@ ENV CXX=/usr/bin/clang++-10
 # ↑ Setup build environment
 # ↓ Build and compile wallet core
 
-RUN git clone https://github.com/trustwallet/wallet-core.git
+RUN git clone https://github.com/ubozov/wallet-core.git
 WORKDIR /wallet-core
 
 # Install dependencies
