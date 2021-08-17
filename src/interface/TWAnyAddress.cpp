@@ -16,6 +16,7 @@
 #include "../Decred/Address.h"
 #include "../Kusama/Address.h"
 #include "../Polkadot/Address.h"
+#include "../Westend/Address.h"
 #include "../Zcash/TAddress.h"
 #include "../Zilliqa/Address.h"
 #include "../Cardano/AddressV3.h"

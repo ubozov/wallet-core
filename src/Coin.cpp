@@ -49,6 +49,7 @@
 #include "TrustWalletCore/TWCoinType.h"
 #include "VeChain/Entry.h"
 #include "Waves/Entry.h"
+#include "Westend/Entry.h"
 #include "Zcash/Entry.h"
 #include "Zilliqa/Entry.h"
 #include "Oasis/Entry.h"
