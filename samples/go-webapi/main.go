@@ -10,8 +10,8 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"go-webapi/controller"
-	"go-webapi/middleware"
+	"github.com/ubozov/wallet-core/samples/go-webapi/controller"
+	"github.com/ubozov/wallet-core/samples/go-webapi/middleware"
 )
 
 type config struct {

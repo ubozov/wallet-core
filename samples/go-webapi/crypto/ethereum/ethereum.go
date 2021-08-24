@@ -17,8 +17,8 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"go-webapi/crypto/proto/ethereum/pb"
-	"go-webapi/types"
+	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/proto/ethereum/pb"
+	"github.com/ubozov/wallet-core/samples/go-webapi/types"
 )
 
 type transaction struct {
@@ -73,12 +73,8 @@ func Sign(seed string, in interface{}) (string, error) {
 	fmt.Println("<== ethereum address lock script: ", types.TWDataHexString(scriptData))
 
 	input := pb.SigningInput{
-		Amount:        tx.Amount,
-		ByteFee:       tx.Fee,
-		ToAddress:     tx.ToAddress,
-		ChangeAddress: tx.ChangeAddress,
-		PrivateKey:    [][]byte{types.TWDataGoBytes(keyData)},
-		CoinType:      60,
+		ToAddress:  tx.ToAddress,
+		PrivateKey: [][]byte{types.TWDataGoBytes(keyData)},
 	}
 
 	inputBytes, err := proto.Marshal(&input)

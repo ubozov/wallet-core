@@ -17,8 +17,8 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"go-webapi/crypto/proto/bitcoin/pb"
-	"go-webapi/types"
+	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/proto/bitcoin/pb"
+	"github.com/ubozov/wallet-core/samples/go-webapi/types"
 )
 
 type transaction struct {

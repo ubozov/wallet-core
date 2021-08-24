@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"go-webapi/crypto"
-	"go-webapi/dto"
+	"github.com/ubozov/wallet-core/samples/go-webapi/crypto"
+	"github.com/ubozov/wallet-core/samples/go-webapi/dto"
 )
 
 // RegisterSignTransactionRoutes ...

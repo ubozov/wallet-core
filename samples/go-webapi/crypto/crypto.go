@@ -3,8 +3,8 @@ package crypto
 import (
 	"fmt"
 
-	"go-webapi/crypto/bitcoin"
-	"go-webapi/crypto/ethereum"
+	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/bitcoin"
+	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/ethereum"
 )
 
 var fabric map[string]func(string, interface{}) (string, error)
