@@ -17,7 +17,6 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/proto/bitcoin/pb"
 	"github.com/ubozov/wallet-core/samples/go-webapi/types"
 )
 
@@ -85,8 +84,8 @@ func Sign(seed string, in interface{}) (string, error) {
 		return "", err
 	}
 
-	utxo := pb.UnspentTransaction{
-		OutPoint: &pb.OutPoint{
+	utxo := UnspentTransaction{
+		OutPoint: &OutPoint{
 			Hash:     utxoHash,
 			Index:    tx.UTXO.Index,
 			Sequence: tx.UTXO.Sequence,
@@ -95,14 +94,14 @@ func Sign(seed string, in interface{}) (string, error) {
 		Script: types.TWDataGoBytes(scriptData),
 	}
 
-	input := pb.SigningInput{
+	input := SigningInput{
 		HashType:      1, // TWBitcoinSigHashTypeAll
 		Amount:        tx.Amount,
 		ByteFee:       tx.Fee,
 		ToAddress:     tx.ToAddress,
 		ChangeAddress: tx.ChangeAddress,
 		PrivateKey:    [][]byte{types.TWDataGoBytes(keyData)},
-		Utxo:          []*pb.UnspentTransaction{&utxo},
+		Utxo:          []*UnspentTransaction{&utxo},
 		CoinType:      0, // TWCoinTypeBitcoin
 	}
 
@@ -116,7 +115,7 @@ func Sign(seed string, in interface{}) (string, error) {
 	outputData := C.TWAnySignerSign(inputData, C.TWCoinTypeBitcoin)
 	defer C.TWDataDelete(outputData)
 
-	var output pb.SigningOutput
+	var output SigningOutput
 	if err := proto.Unmarshal(types.TWDataGoBytes(outputData), &output); err != nil {
 		return "", err
 	}

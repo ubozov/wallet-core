@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package TW.Common.Proto;
 option java_package = "wallet.core.jni.proto";
-option go_package = "./bitcoin;pb";
+option go_package = "../bitcoin;bitcoin";
 
 enum SigningError {
     OK = 0; // OK

@@ -17,7 +17,6 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ubozov/wallet-core/samples/go-webapi/crypto/proto/ethereum/pb"
 	"github.com/ubozov/wallet-core/samples/go-webapi/types"
 )
 
@@ -72,7 +71,7 @@ func Sign(seed string, in interface{}) (string, error) {
 	defer C.TWDataDelete(scriptData)
 	fmt.Println("<== ethereum address lock script: ", types.TWDataHexString(scriptData))
 
-	input := pb.SigningInput{
+	input := SigningInput{
 		ToAddress:  tx.ToAddress,
 		PrivateKey: [][]byte{types.TWDataGoBytes(keyData)},
 	}
@@ -87,7 +86,7 @@ func Sign(seed string, in interface{}) (string, error) {
 	outputData := C.TWAnySignerSign(inputData, C.TWCoinTypeEthereum)
 	defer C.TWDataDelete(outputData)
 
-	var output pb.SigningOutput
+	var output SigningOutput
 	if err := proto.Unmarshal(types.TWDataGoBytes(outputData), &output); err != nil {
 		return "", err
 	}
