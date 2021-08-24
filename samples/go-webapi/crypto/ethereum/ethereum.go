@@ -5,7 +5,6 @@ package ethereum
 // #include <TrustWalletCore/TWHDWallet.h>
 // #include <TrustWalletCore/TWPrivateKey.h>
 // #include <TrustWalletCore/TWPublicKey.h>
-// #include <TrustWalletCore/TWEthereumScript.h>
 // #include <TrustWalletCore/TWAnySigner.h>
 // #include <TrustWalletCore/TWMnemonic.h>
 import "C"
@@ -65,15 +64,9 @@ func Sign(seed string, in interface{}) (string, error) {
 	defer C.TWStringDelete(address)
 	fmt.Println("<== ethereum address: ", types.TWStringGoString(address))
 
-	script := C.TWEthereumScriptLockScriptForAddress(address, C.TWCoinTypeEthereum)
-	scriptData := C.TWEthereumScriptData(script)
-	defer C.TWEthereumScriptDelete(script)
-	defer C.TWDataDelete(scriptData)
-	fmt.Println("<== ethereum address lock script: ", types.TWDataHexString(scriptData))
-
 	input := SigningInput{
 		ToAddress:  tx.ToAddress,
-		PrivateKey: [][]byte{types.TWDataGoBytes(keyData)},
+		PrivateKey: types.TWDataGoBytes(keyData),
 	}
 
 	inputBytes, err := proto.Marshal(&input)

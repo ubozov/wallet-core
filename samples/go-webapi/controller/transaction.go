@@ -19,20 +19,20 @@ func signTransaction(c *gin.Context) {
 	var json dto.SignTransactionRequestDto
 	if err := c.ShouldBindJSON(&json); err != nil {
 		fmt.Print(err.Error())
-		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(err))
+		c.JSON(http.StatusInternalServerError, dto.CreateBadRequestErrorDto(err))
 		return
 	}
 
 	fn, err := crypto.GetSigner(json.Gate)
 	if err != nil {
 		fmt.Print(err.Error())
-		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(err))
+		c.JSON(http.StatusInternalServerError, dto.CreateBadRequestErrorDto(err))
 		return
 	}
 
 	seed, ok := c.Keys["Seed"].(string)
 	if !ok {
-		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(fmt.Errorf("occured error when read seed")))
+		c.JSON(http.StatusInternalServerError, dto.CreateBadRequestErrorDto(fmt.Errorf("occured error when read seed")))
 		return
 	}
 
@@ -40,7 +40,7 @@ func signTransaction(c *gin.Context) {
 
 	if err != nil {
 		fmt.Print(err.Error())
-		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(err))
+		c.JSON(http.StatusInternalServerError, dto.CreateBadRequestErrorDto(err))
 		return
 	}
 

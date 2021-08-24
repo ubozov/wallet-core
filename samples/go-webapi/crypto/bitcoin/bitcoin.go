@@ -44,13 +44,10 @@ func Sign(seed string, in interface{}) (string, error) {
 		return "", err
 	}
 
-	fmt.Println("==> calling wallet core from go")
 	str := types.TWStringCreateWithGoString(seed)
 	emtpy := types.TWStringCreateWithGoString("")
 	defer C.TWStringDelete(str)
 	defer C.TWStringDelete(emtpy)
-
-	fmt.Println("==> mnemonic is valid: ", C.TWMnemonicIsValid(str))
 
 	wallet := C.TWHDWalletCreateWithMnemonic(str, emtpy)
 	defer C.TWHDWalletDelete(wallet)
@@ -59,25 +56,13 @@ func Sign(seed string, in interface{}) (string, error) {
 	keyData := C.TWPrivateKeyData(key)
 	defer C.TWDataDelete(keyData)
 
-	fmt.Println("<== bitcoin private key: ", types.TWDataHexString(keyData))
-
-	// pubKey, err := hex.DecodeString("0288be7586c41a0498c1f931a0aaf08c15811ee2651a5fe0fa213167dcaba59ae8")
-	// if err != nil {
-	// 	return "", err
-	// }
-	// pubKeyData := types.TWDataCreateWithGoBytes(pubKey)
-	// defer C.TWDataDelete(pubKeyData)
-	// fmt.Println("==> bitcoin public key is valid: ", C.TWPublicKeyIsValid(pubKeyData, C.TWPublicKeyTypeSECP256k1))
-
 	address := C.TWHDWalletGetAddressForCoin(wallet, C.TWCoinTypeBitcoin)
 	defer C.TWStringDelete(address)
-	fmt.Println("<== bitcoin address: ", types.TWStringGoString(address))
 
 	script := C.TWBitcoinScriptLockScriptForAddress(address, C.TWCoinTypeBitcoin)
 	scriptData := C.TWBitcoinScriptData(script)
 	defer C.TWBitcoinScriptDelete(script)
 	defer C.TWDataDelete(scriptData)
-	fmt.Println("<== bitcoin address lock script: ", types.TWDataHexString(scriptData))
 
 	utxoHash, err := hex.DecodeString(tx.UTXO.Hash)
 	if err != nil {
