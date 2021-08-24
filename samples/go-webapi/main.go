@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"go-webapi/controller"
+	"go-webapi/middleware"
 )
 
 type config struct {
@@ -30,6 +31,8 @@ func main() {
 
 	engine := gin.Default()
 	engine.Use(cors.Default())
+
+	engine.Use(middleware.Mnemonic(conf.Seed))
 
 	apiRouteGroup := engine.Group("/api/v1")
 

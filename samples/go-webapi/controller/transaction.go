@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"go-webapi/crypto"
 	"go-webapi/dto"
 )
 
@@ -22,9 +23,26 @@ func signTransaction(c *gin.Context) {
 		return
 	}
 
-	// TODO
+	fn, err := crypto.GetSigner(json.Gate)
+	if err != nil {
+		fmt.Print(err.Error())
+		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(err))
+		return
+	}
 
-	fmt.Println("sign tx")
+	seed, ok := c.Keys["Seed"].(string)
+	if !ok {
+		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(fmt.Errorf("occured error when read seed")))
+		return
+	}
 
-	c.JSON(http.StatusOK, dto.CreateSuccessWithDtoAndMessageDto(json, []string{"TX was signed successfully"}))
+	result, err := fn(seed, json.Tx)
+
+	if err != nil {
+		fmt.Print(err.Error())
+		c.JSON(http.StatusBadRequest, dto.CreateBadRequestErrorDto(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, dto.CreateSuccessWithDtoAndMessageDto(result, []string{"TX was signed successfully"}))
 }

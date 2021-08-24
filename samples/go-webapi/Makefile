@@ -1,5 +1,5 @@
 protogen:
-	protoc --proto_path=./proto/v1/  --go_out=plugins=grpc:./proto/v1 ./proto/v1/*.proto
+	protoc --proto_path=./crypto/proto/  --go_out=plugins=grpc:./crypto/proto ./crypto/proto/*.proto
 
 run: build
 	go run . --config ./go-webapi.config.json

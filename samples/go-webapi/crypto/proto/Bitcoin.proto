@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package TW.Bitcoin.Proto;
 option java_package = "wallet.core.jni.proto";
-option go_package = ".;cryptopb";
+option go_package = "./bitcoin;pb";
 
 import "Common.proto";
 
