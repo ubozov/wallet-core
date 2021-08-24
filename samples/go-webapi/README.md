@@ -17,7 +17,8 @@ or
 
 ## Test
 
-```curl --location --request POST 'http://localhost:2322/api/v1/sign_transaction/' \
+```
+curl --location --request POST 'http://localhost:2322/api/v1/sign_transaction/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "gate": "bitcoin",
