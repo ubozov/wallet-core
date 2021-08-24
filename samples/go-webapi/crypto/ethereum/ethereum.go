@@ -13,6 +13,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"google.golang.org/protobuf/proto"
 
@@ -20,16 +21,11 @@ import (
 )
 
 type transaction struct {
-	UTXO struct {
-		Hash     string `json:"hash"`
-		Index    uint32 `json:"index"`
-		Sequence uint32 `json:"sequence"`
-		Amount   int64  `json:"amount"`
-	} `json:"utxo"`
-	ToAddress     string `json:"toAddress"`
-	ChangeAddress string `json:"changeAddress`
-	Fee           int64  `json:"byteFee`
-	Amount        int64  `json:"amount`
+	Nonce     int    `json:"nonce"`
+	GasPrice  int    `json:"gasPrice"`
+	GasLimit  int    `json:"gasLimit"`
+	ToAddress string `json:"toAddress"`
+	Amount    int    `json:"amount`
 }
 
 func Sign(seed string, in interface{}) (string, error) {
@@ -65,8 +61,18 @@ func Sign(seed string, in interface{}) (string, error) {
 	fmt.Println("<== ethereum address: ", types.TWStringGoString(address))
 
 	input := SigningInput{
+		Nonce:      []byte(strconv.Itoa(tx.Nonce)),
+		GasPrice:   []byte(strconv.Itoa(tx.GasPrice)),
+		GasLimit:   []byte(strconv.Itoa(tx.GasLimit)),
 		ToAddress:  tx.ToAddress,
 		PrivateKey: types.TWDataGoBytes(keyData),
+		Transaction: &Transaction{
+			TransactionOneof: &Transaction_Transfer_{
+				Transfer: &Transaction_Transfer{
+					Amount: []byte(strconv.Itoa(tx.Amount)),
+				},
+			},
+		},
 	}
 
 	inputBytes, err := proto.Marshal(&input)

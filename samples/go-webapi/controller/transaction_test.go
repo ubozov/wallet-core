@@ -51,6 +51,23 @@ var requestTests = []struct {
 		"/api/v1/sign_transaction/",
 		"POST",
 		`{
+			"gate": "ethereum",
+			"tx": {
+				"toAddress": "0x3535353535353535353535353535353535353535",
+				"nonce": 9,
+				"gasPrice": 20000000000,
+				"gasLimit": 21000,
+				"amount": 1000000000000000000
+			}
+		}`,
+		http.StatusOK,
+		`{"data":"f880398b32303030303030303030308532313030309435353535353535353535353535353535353535359331303030303030303030303030303030303030801ca05a5b288b2e4a8faeda5ccd33d82897cb7bb995e121f27f43f0b85a24de325f52a053f39495c843ad26ee1f9ba986f0e97f5fc990f8f5f101ce35010b3f7aced1b2","full_messages":["TX was signed successfully"],"success":true}`,
+		"valid data and should return StatusOK",
+	},
+	{
+		"/api/v1/sign_transaction/",
+		"POST",
+		`{
 			"gate": "energi",
 			"tx": {
 				"toAddress": "1Bp9U1ogV3A14FMvKbRJms7ctyso4Z4Tcx",

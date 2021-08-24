@@ -18,6 +18,11 @@ or
 ## Test
 
 ```
+go test ./...
+```
+or
+
+```
 curl --location --request POST 'http://localhost:2322/api/v1/sign_transaction/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
