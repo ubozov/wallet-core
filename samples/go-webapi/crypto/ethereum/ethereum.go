@@ -27,7 +27,7 @@ type transaction struct {
 	GasPrice  int64  `json:"gasPrice"`
 	GasLimit  int64  `json:"gasLimit"`
 	ToAddress string `json:"toAddress"`
-	Amount    int64  `json:"amount`
+	Amount    int64  `json:"value"`
 }
 
 func Sign(seed string, in interface{}) (string, error) {

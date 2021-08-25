@@ -57,7 +57,7 @@ var requestTests = []struct {
 				"nonce": 9,
 				"gasPrice": 20000000000,
 				"gasLimit": 21000,
-				"amount": 1000000000000000000
+				"value": 1000000000000000000
 			}
 		}`,
 		http.StatusOK,
