@@ -13,19 +13,21 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"strconv"
+	"math/big"
 
+	"github.com/ethereum/go-ethereum/common/math"
 	"google.golang.org/protobuf/proto"
 
 	"github.com/ubozov/wallet-core/samples/go-webapi/types"
 )
 
 type transaction struct {
-	Nonce     int    `json:"nonce"`
-	GasPrice  int    `json:"gasPrice"`
-	GasLimit  int    `json:"gasLimit"`
+	ChainID   int64  `json:"chainId"`
+	Nonce     int64  `json:"nonce"`
+	GasPrice  int64  `json:"gasPrice"`
+	GasLimit  int64  `json:"gasLimit"`
 	ToAddress string `json:"toAddress"`
-	Amount    int    `json:"amount`
+	Amount    int64  `json:"amount`
 }
 
 func Sign(seed string, in interface{}) (string, error) {
@@ -61,15 +63,16 @@ func Sign(seed string, in interface{}) (string, error) {
 	fmt.Println("<== ethereum address: ", types.TWStringGoString(address))
 
 	input := SigningInput{
-		Nonce:      []byte(strconv.Itoa(tx.Nonce)),
-		GasPrice:   []byte(strconv.Itoa(tx.GasPrice)),
-		GasLimit:   []byte(strconv.Itoa(tx.GasLimit)),
+		ChainId:    intToByteArray(tx.ChainID),
+		Nonce:      intToByteArray(tx.Nonce),
+		GasPrice:   intToByteArray(tx.GasPrice),
+		GasLimit:   intToByteArray(tx.GasLimit),
 		ToAddress:  tx.ToAddress,
 		PrivateKey: types.TWDataGoBytes(keyData),
 		Transaction: &Transaction{
 			TransactionOneof: &Transaction_Transfer_{
 				Transfer: &Transaction_Transfer{
-					Amount: []byte(strconv.Itoa(tx.Amount)),
+					Amount: intToByteArray(tx.Amount),
 				},
 			},
 		},
@@ -92,4 +95,8 @@ func Sign(seed string, in interface{}) (string, error) {
 	fmt.Println("<== ethereum signed tx: ", hex.EncodeToString(output.Encoded))
 
 	return hex.EncodeToString(output.Encoded), nil
+}
+
+func intToByteArray(num int64) []byte {
+	return math.U256Bytes(big.NewInt(num))
 }
