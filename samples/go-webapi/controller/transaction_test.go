@@ -62,6 +62,24 @@ var requestTests = []struct {
 		}`,
 		http.StatusOK,
 		`{"data":"f86c098504a817c800825208943535353535353535353535353535353535353535880de0b6b3a7640000801ba0b2932a2134bff4645f7955ac42f96710a4642d634cb8dd961e56773d1e8352b6a00334ababd8ab0e1b2e11cee40294ba6e66d3606e07a5204d09e3df8b242078d4","full_messages":["TX was signed successfully"],"success":true}`,
+		"invalid data and should return StatusOK",
+	},
+	{
+		"/api/v1/sign_transaction/",
+		"POST",
+		`{
+			"gate": "ethereum",
+			"tx": {
+				"chainId": 3,
+				"toAddress": "0x3535353535353535353535353535353535353535",
+				"nonce": 9,
+				"gasPrice": 20000000000,
+				"gasLimit": 21000,
+				"value": 1000000000000000000
+			}
+		}`,
+		http.StatusOK,
+		`{"data":"f86c098504a817c800825208943535353535353535353535353535353535353535880de0b6b3a76400008029a0127a4192884ce1bf7a547e80c6550637d25580c79d50a7ab247a75a9c2d35862a060c5a8dbfacc16a61f98ab29af61d8890b792d7ed60f785c9fd236ba164d9a04","full_messages":["TX was signed successfully"],"success":true}`,
 		"valid data and should return StatusOK",
 	},
 	{
